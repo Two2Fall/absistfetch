@@ -5,13 +5,17 @@
 import Fetch as f
 from cnf.Configuration import *
 from os import getlogin as GetUsername
+from os.path import join as JoinPath
+from os.path import abspath as AbsolutePath
+from os.path import dirname as Dirname
 
 Username: str = GetUsername().strip()
 Hostname: str = f.GetHostname().strip()
 COLOR = f"\033[38;2;{KEY_COLOR[0]};{KEY_COLOR[1]};{KEY_COLOR[2]}m"
 CLEAR = "\033[0m"
 
-with open("cnf/" + LOGO_PATH, "r") as File:
+BASE_DIR = Dirname(AbsolutePath(__file__))
+with open(JoinPath(BASE_DIR, "cnf", LOGO_PATH), "r") as File:
     LogoFileLines: list[str] = File.readlines()
 
 def CreateParagraph(Key: str, Value: str):
