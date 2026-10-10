@@ -79,18 +79,18 @@ def GetRAMInfo():
     NotUsedRAM: int = int(MIFContent[2].split(":")[1].split()[0])
     UsedRAM: int = TotalRAM - NotUsedRAM
     
-    TotalRAMInGB: float = round(TotalRAM / 1_048_576, 2)
-    UsedRAMInGB: float = round(UsedRAM / 1_048_576, 2)
+    TotalRAMInGB: float = round(TotalRAM / 1_000_000, 2)
+    UsedRAMInGB: float = round(UsedRAM / 1_000_000, 2)
     return f"{UsedRAMInGB} GB / {TotalRAMInGB} GB"
 
 def GetStorageInfo():
     FilesystemStats = StatFS(ROOT_DIRECTORY)
     TotalFSBytes: int = FilesystemStats.f_blocks * FilesystemStats.f_frsize
-    TotalGBUsed: float = round(TotalFSBytes / (1024 ** 3), 2)
+    TotalGBUsed: float = round(TotalFSBytes / (1000 ** 3), 2)
 
     AvailableFSBytes: int = FilesystemStats.f_bavail * FilesystemStats.f_frsize
     FreeFSBytes: int = TotalFSBytes - AvailableFSBytes
-    FreeGB: float = round(FreeFSBytes / (1024 ** 3), 2)
+    FreeGB: float = round(FreeFSBytes / (1000 ** 3), 2)
 
     return f"{FreeGB} GB / {TotalGBUsed} GB"
 
