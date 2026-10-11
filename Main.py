@@ -11,7 +11,8 @@ from os.path import dirname as Dirname
 
 Username: str = GetUsername().strip()
 Hostname: str = f.GetHostname().strip()
-COLOR = f"\033[38;2;{KEY_COLOR[0]};{KEY_COLOR[1]};{KEY_COLOR[2]}m"
+KEY_HEX_COLOR = f"\033[38;2;{KEY_COLOR[0]};{KEY_COLOR[1]};{KEY_COLOR[2]}m"
+LOGO_HEX_COLOR = f"\033[38;2;{LOGO_COLOR[0]};{LOGO_COLOR[1]};{LOGO_COLOR[2]}m"
 CLEAR = "\033[0m"
 
 BASE_DIR = Dirname(AbsolutePath(__file__))
@@ -19,10 +20,10 @@ with open(JoinPath(BASE_DIR, "cnf", LOGO_PATH), "r") as File:
     LogoFileLines: list[str] = File.readlines()
 
 def CreateParagraph(Key: str, Value: str):
-    return COLOR + f"{Key}: " + CLEAR + f"{Value}"
+    return KEY_HEX_COLOR + f"{Key}: " + CLEAR + f"{Value}"
 
 InfoOutput: list[str] = [
-    f"{COLOR + Username + CLEAR}@{COLOR + Hostname + CLEAR}",
+    f"{KEY_HEX_COLOR + Username + CLEAR}@{KEY_HEX_COLOR + Hostname + CLEAR}",
     "-" * 32,
     CreateParagraph("OS", f.GetOSRelease()),
     CreateParagraph("Kernel", f.GetKernel()),
@@ -44,9 +45,9 @@ MaximumLength: int = max(len(Line) for Line in LogoFileLines)
 for LFLIndex, LogoFileLine in enumerate(LogoFileLines):
     CleanLogoLine: str = LogoFileLine.rstrip('\r\n')
     if LFLIndex >= len(InfoOutput):
-        PrintOutput.append(CleanLogoLine)
+        PrintOutput.append(LOGO_HEX_COLOR + CleanLogoLine + CLEAR)
     else:
-        PrintOutput.append(" " + CleanLogoLine.ljust(MaximumLength + 2) + InfoOutput[LFLIndex])
+        PrintOutput.append(" " + LOGO_HEX_COLOR + CleanLogoLine.ljust(MaximumLength + 2) + CLEAR + InfoOutput[LFLIndex])
 
 for PrintLine in PrintOutput:
     print(PrintLine)
