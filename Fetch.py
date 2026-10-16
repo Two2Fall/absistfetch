@@ -24,9 +24,15 @@ def GetKernel() -> str:
     return VersionFileContent.split()[2]
 
 def GetOSRelease() -> str:
-    with open(OS_RELEASE_FILE, "r") as OSReleaseFile:
-        OSReleaseFileContent: list[str] = OSReleaseFile.readlines()
-    return OSReleaseFileContent[1].split("=")[1].strip()[1:-1]
+    import platform
+    if not platform.system():
+        return "Unknown"
+    if platform.system() == "Darwin":
+        return "MacOS"
+    else:
+        with open(OS_RELEASE_FILE, "r") as OSReleaseFile:
+            OSReleaseFileContent: list[str] = OSReleaseFile.readlines()
+        return OSReleaseFileContent[1].split("=")[1].strip()[1:-1]
 
 def GetCPUInformation() -> str:
     with open(CPU_INFORMATION_FILE, "r") as CPUInfoFile:
