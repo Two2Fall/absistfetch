@@ -4,10 +4,10 @@
 
 from os import environ as SystemEnviron
 from os import statvfs as StatFS
+from os import uname as OSUname
 
 # Special files that contains system information
 OS_RELEASE_FILE      = "/etc/os-release"
-HOSTNAME_FILE        = "/etc/hostname"
 KERNEL_VERSION_FILE  = "/proc/version"
 CPU_INFORMATION_FILE = "/proc/cpuinfo"
 MEM_INFORMATION_FILE = "/proc/meminfo"
@@ -95,5 +95,4 @@ def GetStorageInfo():
     return f"{FreeGB} GB / {TotalGBUsed} GB"
 
 def GetHostname():
-    with open(HOSTNAME_FILE, "r") as HostnameFile:
-        return HostnameFile.read()
+    return OSUname().nodename
